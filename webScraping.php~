@@ -1,0 +1,44 @@
+<?php
+
+require_once("../outils.php");
+require __DIR__ . "/vendor/autoload.php";
+use Goutte\Client;
+
+$html=debut("Web Scraping", "../monStyle.css");
+
+
+$client = new Client();
+$crawler = $client->request('GET', 'https://www.lequipe.fr/Football/ligue-1/page-classement-equipes/general');
+//$crawler = $client->request('GET', "https://www.lemonde.fr");
+
+/*
+$crawler->filter('div.article > a')->each(function ($node) use ($out) {
+  echo "okok<br>";
+  //$url = $node->attr('href');
+  //echo $url."<br>";
+  //$nom = trim($node->filter('.article__title')->text());
+  //print_r([$nom,$url]);
+});
+*/
+
+$a=$crawler->filter('table.table--teams > tbody > tr');
+echo $a->count();
+foreach($a as $key=>$value){
+  echo $value."<br>";
+}
+
+/*
+$crawler->filter('table.table--teams')->each(function ($node) use ($out) {
+  echo $node->text."<br>";
+  //$url = $node->attr('href');
+  //$nom = trim($node->filter('.rowCellParticipantName___38vskiN')->text());
+  //print_r([$nom,$url]);
+});
+*/
+
+$html.=fin();
+
+echo $html;
+
+
+?>
